@@ -1,13 +1,35 @@
 import Scene from './components/canvas/Scene';
+import Hero from './sections/Hero';
+import About from './sections/About';
+import Projects from './sections/Projects';
+import Contact from './sections/Contact';
+import { sections } from './data/sections';
 
 export function App() {
   return (
     <>
       <Scene />
-      <main className="min-h-screen flex items-center justify-center p-6 text-center select-text">
-        <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-neutral-900 select-text">
-          Portfolio coming soon
-        </h1>
+      <header className="fixed top-0 left-0 right-0 z-20 bg-bg/80 backdrop-blur-md border-b border-surface">
+        <nav className="max-w-5xl mx-auto px-6 py-4">
+          <ul className="flex items-center gap-6">
+            {sections.map((section) => (
+              <li key={section.id}>
+                <a
+                  href={`#${section.id}`}
+                  className="font-body text-sm text-muted hover:text-text transition-colors"
+                >
+                  {section.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </header>
+      <main className="relative z-10">
+        <Hero />
+        <About />
+        <Projects />
+        <Contact />
       </main>
     </>
   );

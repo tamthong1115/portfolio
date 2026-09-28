@@ -1,1 +1,76 @@
-export const projects = [];
+export const projects = [
+  {
+    id: "ecommerce-platform",
+    title: "E-Commerce Next.js Platform",
+    summary: "A multi-vendor e-commerce platform featuring AI-powered image search, role-based dashboards, and real-time updates.",
+    role: "Team Leader",
+    stack: [
+      "Next.js",
+      "TypeScript",
+      "PostgreSQL",
+      "Prisma",
+      "Tailwind CSS",
+      "Redis",
+      "Pusher",
+      "Google GenAI",
+    ],
+    links: {
+      live: "",
+      repo: "https://github.com/tamthong1115/ecommerce_nexjts",
+    },
+    image: null,
+  },
+  {
+    id: "hotel-booking-platform",
+    title: "Hotel Booking Application",
+    summary: "Full-stack hotel search and reservation system featuring interactive Mapbox location discovery and Stripe payments.",
+    role: "Fullstack Developer",
+    stack: [
+      "React",
+      "Node.js",
+      "Express",
+      "MongoDB",
+      "Stripe",
+      "Mapbox",
+      "Vitest",
+      "Playwright",
+    ],
+    links: {
+      live: "",
+      repo: "https://github.com/tamthong1115/booking-hotel-app",
+    },
+    image: null,
+  },
+  {
+    id: "clinic-management-system",
+    title: "Clinic Management System",
+    summary: "Microservices architecture for medical clinic operations, appointment management, and secure patient portals.",
+    role: "Team Leader",
+    stack: [
+      "Java",
+      "Spring Boot 3",
+      "React",
+      "PostgreSQL",
+      "Docker",
+      "Spring Cloud Gateway",
+      "Netflix Eureka",
+    ],
+    links: {
+      live: "",
+      repo: "https://github.com/tamthong1115/clinic-ecommerce-web",
+    },
+    image: null,
+  },
+  {
+    id: "warehouse-management-system",
+    title: "Warehouse Management System (WMS)",
+    summary: "High-volume logistics platform handling ASN processing, LPN tracking, and optimized warehouse picking strategies.",
+    role: "Software Developer",
+    stack: ["Blazor", "C#", ".NET", "PostgreSQL", "SQL Server"],
+    links: {
+      live: "",
+      repo: "",
+    },
+    image: null,
+  },
+];
