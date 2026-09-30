@@ -8,4 +8,5 @@ export const profile = {
     github: "https://github.com/tamthong1115",
     linkedin: "https://linkedin.com/in/tamthong1115",
   },
+  photo: null,
 };

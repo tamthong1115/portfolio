@@ -39,8 +39,26 @@ Create an optimized production bundle:
 npm run build
 ```
 
+### Preview
+
 Preview the production build locally:
 
 ```bash
 npm run preview
 ```
+
+## Image Optimization
+
+Project assets are placed in `src/assets/projects/` named `<project-id>.jpg|png|webp` and imported directly via Vite for automatic hashing and bundle optimization.
+
+To convert source PNG or JPG images to optimized WebP format, run:
+
+```bash
+node scripts/optimize-images.mjs
+```
+
+This uses `sharp` to resize and compress images into 16:9 1280x720 WebP files.
+
+## Assets Note
+
+- `public/og.png`: Temporary 1200x630 placeholder graphic displaying the site name and title on the dark canvas theme. Remember to replace this with an in-engine capture of the finished 3D scene before production launch.

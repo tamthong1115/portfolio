@@ -1,3 +1,7 @@
+import ecommerceImg from '../assets/projects/ecommerce-platform.webp';
+import hotelImg from '../assets/projects/hotel-booking-platform.webp';
+import clinicImg from '../assets/projects/clinic-management-system.webp';
+
 export const projects = [
   {
     id: "ecommerce-platform",
@@ -18,7 +22,7 @@ export const projects = [
       live: "",
       repo: "https://github.com/tamthong1115/ecommerce_nexjts",
     },
-    image: null,
+    image: ecommerceImg,
   },
   {
     id: "hotel-booking-platform",
@@ -39,7 +43,7 @@ export const projects = [
       live: "",
       repo: "https://github.com/tamthong1115/booking-hotel-app",
     },
-    image: null,
+    image: hotelImg,
   },
   {
     id: "clinic-management-system",
@@ -59,7 +63,7 @@ export const projects = [
       live: "",
       repo: "https://github.com/tamthong1115/clinic-ecommerce-web",
     },
-    image: null,
+    image: clinicImg,
   },
   {
     id: "warehouse-management-system",
