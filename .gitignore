@@ -17,9 +17,9 @@ dist-ssr
 .vscode/*
 !.vscode/extensions.json
 .idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+# Raw models and test assets
+src/assets/models/raw/
+*.glb
+!src/assets/models/desk.glb
+!public/models/desk.glb
+

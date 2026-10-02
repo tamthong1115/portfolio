@@ -1,26 +1,23 @@
-import { useRef } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { useReducedMotion } from '../../hooks/useReducedMotion';
-
-function SpinningCube() {
-  const meshRef = useRef(null);
-  const prefersReducedMotion = useReducedMotion();
-
-  useFrame((state, delta) => {
-    if (!meshRef.current || prefersReducedMotion) return;
-    meshRef.current.rotation.x += delta * 0.4;
-    meshRef.current.rotation.y += delta * 0.6;
-  });
-
-  return (
-    <mesh ref={meshRef}>
-      <boxGeometry args={[2, 2, 2]} />
-      <meshStandardMaterial color="#4f46e5" roughness={0.3} metalness={0.1} />
-    </mesh>
-  );
-}
+import { Suspense, useState, useEffect } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { PerspectiveCamera, Environment, OrbitControls } from '@react-three/drei';
+import Desk from './Desk';
 
 export function Scene() {
+  const [showDevControls, setShowDevControls] = useState(false);
+
+  useEffect(() => {
+    // Only in development and when URL hash includes #controls
+    if (import.meta.env.DEV && typeof window !== 'undefined') {
+      const checkHash = () => {
+        setShowDevControls(window.location.hash.includes('controls'));
+      };
+      checkHash();
+      window.addEventListener('hashchange', checkHash);
+      return () => window.removeEventListener('hashchange', checkHash);
+    }
+  }, []);
+
   return (
     <div
       style={{
@@ -29,16 +26,66 @@ export function Scene() {
         left: 0,
         right: 0,
         bottom: 0,
-        zIndex: -1,
-        pointerEvents: 'none',
+        zIndex: 0,
+        pointerEvents: showDevControls ? 'auto' : 'none',
       }}
-      className="fixed inset-0 -z-10 pointer-events-none"
+      className="fixed inset-0 z-0 pointer-events-none"
       aria-hidden="true"
     >
-      <Canvas dpr={[1, 1.5]}>
-        <ambientLight intensity={0.7} />
-        <directionalLight position={[5, 5, 5]} intensity={1.2} />
-        <SpinningCube />
+      <Canvas
+        shadows
+        dpr={[1, 1.5]}
+        gl={{
+          antialias: true,
+          powerPreference: 'high-performance',
+          stencil: false,
+        }}
+        camera={{ position: [0, 0.8, 3.8], fov: 42 }}
+      >
+        <PerspectiveCamera makeDefault position={[0, 0.8, 3.8]} fov={42} />
+
+        {/* Ambient & fill lighting to prevent any pure black shadows */}
+        <ambientLight intensity={0.35} />
+        <hemisphereLight
+          args={['#2c3e55', '#0b0f19', 0.55]}
+          position={[0, 5, 0]}
+        />
+
+        {/* Warm lamp light - casts soft shadows across desk surface */}
+        <pointLight
+          castShadow
+          position={[-1.2, 0.9, 0.4]}
+          color="#ffb366"
+          intensity={14}
+          distance={7}
+          decay={2}
+          shadow-mapSize={[1024, 1024]}
+          shadow-bias={-0.0004}
+          shadow-camera-near={0.1}
+          shadow-camera-far={10}
+        />
+
+        {/* Cool monitor glow - creates atmospheric contrast against warm lamp */}
+        <pointLight
+          position={[0.1, 0.35, 0.5]}
+          color="#66ccff"
+          intensity={8}
+          distance={5}
+          decay={2}
+        />
+
+        {/* Subtle environment reflections */}
+        <Environment preset="night" environmentIntensity={0.2} />
+
+        {/* Hero Desk Workspace Model */}
+        <Suspense fallback={null}>
+          <Desk />
+        </Suspense>
+
+        {/* Dev-only OrbitControls: strictly hidden unless DEV mode + #controls hash */}
+        {import.meta.env.DEV && showDevControls && (
+          <OrbitControls makeDefault enableDamping dampingFactor={0.05} />
+        )}
       </Canvas>
     </div>
   );

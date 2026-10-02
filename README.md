@@ -62,3 +62,5 @@ This uses `sharp` to resize and compress images into 16:9 1280x720 WebP files.
 ## Assets Note
 
 - `public/og.png`: Temporary 1200x630 placeholder graphic displaying the site name and title on the dark canvas theme. Remember to replace this with an in-engine capture of the finished 3D scene before production launch.
+- `src/assets/models/desk.glb`: Retro developer workstation 3D model (1.47 MB), optimized with Draco geometry compression and WebP textures via glTF-Transform. Licensed under CC-BY 4.0.
+
