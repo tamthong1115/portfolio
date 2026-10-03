@@ -55,15 +55,9 @@ export function Desk() {
     }
   }, [scene]);
 
-  // Subtle idle animation - floating desk group and subtle monitor glow pulse
+  // Monitor screen pulse & flicker animation
   useFrame((state) => {
     if (prefersReducedMotion) {
-      // In reduced motion mode, reset positions to strictly static neutral values
-      if (groupRef.current) {
-        groupRef.current.position.y = 0;
-        groupRef.current.rotation.y = -1.4;
-        groupRef.current.rotation.x = 0.15;
-      }
       if (screenMeshRef.current && screenMeshRef.current.material) {
         screenMeshRef.current.material.emissiveIntensity = 1.15;
       }
@@ -71,13 +65,6 @@ export function Desk() {
     }
 
     const t = state.clock.getElapsedTime();
-
-    if (groupRef.current) {
-      // Gentle sine-wave floating and yaw drift (idle motion)
-      groupRef.current.position.y = Math.sin(t * 0.7) * 0.035;
-      groupRef.current.rotation.y = -1.4 + Math.sin(t * 0.4) * 0.02;
-      groupRef.current.rotation.x = 0.15 + Math.cos(t * 0.5) * 0.008;
-    }
 
     if (screenMeshRef.current && screenMeshRef.current.material) {
       // Faint monitor pulse & flicker: primary slow pulse with micro-fluctuation

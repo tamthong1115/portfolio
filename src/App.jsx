@@ -1,3 +1,5 @@
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { LenisProvider } from './context/LenisContext';
 import Scene from './components/canvas/Scene';
 import Loader from './components/ui/Loader';
 import Header from './components/layout/Header';
@@ -8,9 +10,14 @@ import Projects from './sections/Projects';
 import Contact from './sections/Contact';
 
 export function App() {
+  const handleLoaderComplete = () => {
+    // Refresh ScrollTrigger after loader fade transition completes
+    ScrollTrigger.refresh();
+  };
+
   return (
-    <>
-      <Loader />
+    <LenisProvider>
+      <Loader onLoaded={handleLoaderComplete} />
       <Scene />
 
       <Header />
@@ -21,7 +28,7 @@ export function App() {
         <Contact />
       </main>
       <Footer />
-    </>
+    </LenisProvider>
   );
 }
 

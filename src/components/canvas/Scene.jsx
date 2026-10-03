@@ -1,7 +1,8 @@
 import { Suspense, useState, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { PerspectiveCamera, Environment, OrbitControls } from '@react-three/drei';
+import { Environment, OrbitControls } from '@react-three/drei';
 import Desk from './Desk';
+import CameraRig from './CameraRig';
 
 export function Scene() {
   const [showDevControls, setShowDevControls] = useState(false);
@@ -33,6 +34,7 @@ export function Scene() {
       aria-hidden="true"
     >
       <Canvas
+        frameloop="always"
         shadows="percentage"
         dpr={[1, 1.5]}
         gl={{
@@ -40,9 +42,9 @@ export function Scene() {
           powerPreference: 'high-performance',
           stencil: false,
         }}
-        camera={{ position: [0, 0.95, 3.7], fov: 42 }}
       >
-        <PerspectiveCamera makeDefault position={[0, 0.95, 3.7]} fov={42} />
+        {/* Scroll-driven Camera Rig with Additive Idle Motion */}
+        <CameraRig />
 
         {/* Ambient & fill lighting to prevent any pure black shadows */}
         <ambientLight intensity={0.35} />

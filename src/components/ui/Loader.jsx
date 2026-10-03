@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useProgress } from '@react-three/drei';
 
-export function Loader() {
+export function Loader({ onLoaded }) {
   const { progress, active } = useProgress();
   const [isDismissed, setIsDismissed] = useState(false);
   const [isExited, setIsExited] = useState(false);
@@ -35,10 +35,13 @@ export function Loader() {
     if (isDismissed) {
       const exitTimer = setTimeout(() => {
         setIsExited(true);
+        if (onLoaded) {
+          onLoaded();
+        }
       }, 500); // matches transition duration
       return () => clearTimeout(exitTimer);
     }
-  }, [isDismissed]);
+  }, [isDismissed, onLoaded]);
 
   const handleSkip = () => {
     setIsDismissed(true);
