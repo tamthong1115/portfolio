@@ -33,16 +33,16 @@ export function Scene() {
       aria-hidden="true"
     >
       <Canvas
-        shadows
+        shadows="percentage"
         dpr={[1, 1.5]}
         gl={{
           antialias: true,
           powerPreference: 'high-performance',
           stencil: false,
         }}
-        camera={{ position: [0, 0.8, 3.8], fov: 42 }}
+        camera={{ position: [0, 0.95, 3.7], fov: 42 }}
       >
-        <PerspectiveCamera makeDefault position={[0, 0.8, 3.8]} fov={42} />
+        <PerspectiveCamera makeDefault position={[0, 0.95, 3.7]} fov={42} />
 
         {/* Ambient & fill lighting to prevent any pure black shadows */}
         <ambientLight intensity={0.35} />
@@ -67,10 +67,10 @@ export function Scene() {
 
         {/* Cool monitor glow - creates atmospheric contrast against warm lamp */}
         <pointLight
-          position={[0.1, 0.35, 0.5]}
+          position={[-0.05, 0.25, -0.05]}
           color="#66ccff"
-          intensity={8}
-          distance={5}
+          intensity={6}
+          distance={4}
           decay={2}
         />
 

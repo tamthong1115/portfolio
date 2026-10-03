@@ -32,10 +32,13 @@
 
 1. **Warm Desk Lamp + Cool Monitor Contrast**:
    - Desk Lamp: Positioned at `[-1.2, 0.9, 0.4]` with warm tint (`#ffb366`), gentle falloff (distance: 7, decay: 2), and soft shadow casting across the keyboard and desk surface.
-   - Monitor Screen: Emissive `MeshStandardMaterial` (`#58c5ff`, intensity ~1.15) with an atmospheric pointLight fill at `[0.1, 0.35, 0.5]` (`#66ccff`, intensity: 8) illuminating the surrounding desk area.
-2. **Shadow Artifact Mitigation**:
+   - Monitor Screen: Emissive `MeshStandardMaterial` (`#58c5ff`, intensity ~1.15, roughness 0.6 to eliminate glare reflection) paired with an atmospheric cool pointLight at `[-0.05, 0.25, -0.05]` (`#66ccff`, intensity: 6, distance: 4) radiating outward onto the mechanical keyboard and desk surface.
+2. **Camera & Scene Composition**:
+   - Perspective Camera positioned at `[0, 0.95, 3.7]` (FOV: 42°), angled downward onto the desk surface.
+   - Desk group positioned at origin (`[0, 0, 0]`) with base rotation `[0.15, -1.4, 0]`, orienting the terminal monitor, glowing keyboard, chassis drives, pen holder, and wooden chair directly into a dynamic 3/4 isometric hero view.
+3. **Shadow Artifact Mitigation**:
    - Configured `shadow-bias={-0.0004}` and tight near/far planes (`0.1` to `10`) to eliminate shadow acne and peter-panning while maintaining sharp, natural shadows on low-to-medium spec devices.
-3. **Ambient Baseline**:
+4. **Ambient Baseline**:
    - `ambientLight` (intensity 0.35) combined with `hemisphereLight` (`#2c3e55` sky, `#0b0f19` ground, intensity 0.55) ensures crevices and unlit surfaces stay rich and atmospheric rather than falling into pitch-black void.
    - `Environment preset="night"` provides subtle physical reflections without dominating the scene.
 
