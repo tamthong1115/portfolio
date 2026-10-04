@@ -1,38 +1,55 @@
 import { useState, useEffect, useRef } from 'react';
 import { useProgress } from '@react-three/drei';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { useDeviceTier } from '../../hooks/useDeviceTier';
 
 export function Loader({ onLoaded }) {
   const { progress, active } = useProgress();
+  const prefersReducedMotion = useReducedMotion();
+  const tier = useDeviceTier();
   const [isDismissed, setIsDismissed] = useState(false);
   const [isExited, setIsExited] = useState(false);
   const [minTimeElapsed, setMinTimeElapsed] = useState(false);
   const startTimeRef = useRef(0);
 
+  // If low tier device, bypass loader immediately as 3D canvas is not rendered
+  useEffect(() => {
+    if (tier === 'low' && onLoaded) {
+      onLoaded();
+    }
+  }, [tier, onLoaded]);
+
   // Enforce minimum 400ms display time to prevent jarring flash on fast networks
   useEffect(() => {
     startTimeRef.current = Date.now();
-    const timer = setTimeout(() => {
-      setMinTimeElapsed(true);
-    }, 400);
+    const timer = setTimeout(
+      () => {
+        setMinTimeElapsed(true);
+      },
+      prefersReducedMotion ? 0 : 400
+    );
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [prefersReducedMotion]);
 
-
-  // When loading is finished (progress reaches 100 or active turns false) AND minTimeElapsed is true
+  // When loading is finished AND minTimeElapsed is true
   useEffect(() => {
     if ((progress >= 100 || !active) && minTimeElapsed && !isDismissed) {
-      // Small buffer for smooth visual transition
+      const delay = prefersReducedMotion ? 0 : 150;
       const fadeTimer = setTimeout(() => {
         setIsDismissed(true);
-      }, 150);
+        if (prefersReducedMotion) {
+          setIsExited(true);
+          if (onLoaded) onLoaded();
+        }
+      }, delay);
       return () => clearTimeout(fadeTimer);
     }
-  }, [progress, active, minTimeElapsed, isDismissed]);
+  }, [progress, active, minTimeElapsed, isDismissed, prefersReducedMotion, onLoaded]);
 
-  // Handle CSS transition completion to remove element from interaction/flow
+  // Handle CSS transition completion to remove element from DOM
   useEffect(() => {
-    if (isDismissed) {
+    if (isDismissed && !isExited && !prefersReducedMotion) {
       const exitTimer = setTimeout(() => {
         setIsExited(true);
         if (onLoaded) {
@@ -41,13 +58,17 @@ export function Loader({ onLoaded }) {
       }, 500); // matches transition duration
       return () => clearTimeout(exitTimer);
     }
-  }, [isDismissed, onLoaded]);
+  }, [isDismissed, isExited, prefersReducedMotion, onLoaded]);
 
   const handleSkip = () => {
     setIsDismissed(true);
+    if (prefersReducedMotion) {
+      setIsExited(true);
+      if (onLoaded) onLoaded();
+    }
   };
 
-  if (isExited) {
+  if (isExited || tier === 'low') {
     return null;
   }
 
@@ -58,9 +79,9 @@ export function Loader({ onLoaded }) {
       role="status"
       aria-live="polite"
       aria-label="Loading 3D workspace"
-      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-[var(--color-bg)] transition-opacity duration-500 ease-out ${
-        isDismissed ? 'opacity-0 pointer-events-none' : 'opacity-100'
-      }`}
+      className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-[var(--color-bg)] ${
+        prefersReducedMotion ? '' : 'transition-opacity duration-500 ease-out'
+      } ${isDismissed ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}
     >
       {/* Skip Button - Always accessible in top right */}
       <div className="absolute top-6 right-6">
@@ -76,7 +97,11 @@ export function Loader({ onLoaded }) {
       <div className="w-full max-w-xs px-6 flex flex-col items-center text-center">
         {/* Terminal/Workspace Branding */}
         <div className="mb-6 flex items-center gap-2">
-          <span className="inline-block w-2.5 h-2.5 rounded-full bg-[var(--color-accent)] animate-pulse" />
+          <span
+            className={`inline-block w-2.5 h-2.5 rounded-full bg-[var(--color-accent)] ${
+              prefersReducedMotion ? '' : 'animate-pulse'
+            }`}
+          />
           <span className="font-[var(--font-display)] text-sm tracking-widest uppercase text-[var(--color-muted)]">
             Loading Workspace
           </span>
@@ -86,12 +111,15 @@ export function Loader({ onLoaded }) {
         <div
           className="w-full h-1.5 bg-[var(--color-surface)] rounded-full overflow-hidden border border-slate-800"
           role="progressbar"
+          aria-label="3D asset loading progress"
           aria-valuenow={displayPercent}
           aria-valuemin={0}
           aria-valuemax={100}
         >
           <div
-            className="h-full bg-[var(--color-accent)] transition-all duration-200 ease-out shadow-[0_0_12px_var(--color-accent)]"
+            className={`h-full bg-[var(--color-accent)] ${
+              prefersReducedMotion ? '' : 'transition-all duration-200 ease-out'
+            } shadow-[0_0_12px_var(--color-accent)]`}
             style={{ width: `${displayPercent}%` }}
           />
         </div>

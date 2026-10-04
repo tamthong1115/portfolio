@@ -28,17 +28,48 @@ export function CameraRig() {
 
   // Setup GSAP ScrollTrigger timeline
   useEffect(() => {
-    // When prefersReducedMotion is enabled, keep camera fixed at hero stop
+    // When prefersReducedMotion is enabled: instant camera stops per section, no continuous scrub/easing
     if (prefersReducedMotion) {
-      rigState.current = {
-        posX: CAMERA_STOPS.hero.pos[0],
-        posY: CAMERA_STOPS.hero.pos[1],
-        posZ: CAMERA_STOPS.hero.pos[2],
-        targetX: CAMERA_STOPS.hero.target[0],
-        targetY: CAMERA_STOPS.hero.target[1],
-        targetZ: CAMERA_STOPS.hero.target[2],
+      const setStop = (stopKey) => {
+        const stop = CAMERA_STOPS[stopKey];
+        if (!stop) return;
+        rigState.current = {
+          posX: stop.pos[0],
+          posY: stop.pos[1],
+          posZ: stop.pos[2],
+          targetX: stop.target[0],
+          targetY: stop.target[1],
+          targetZ: stop.target[2],
+        };
       };
-      return;
+
+      setStop('hero');
+
+      const ctx = gsap.context(() => {
+        const sectionsList = [
+          { id: 'hero', key: 'hero' },
+          { id: 'about', key: 'about' },
+          { id: 'projects', key: 'projects' },
+          { id: 'contact', key: 'contact' },
+        ];
+
+        sectionsList.forEach(({ id, key }) => {
+          const el = document.getElementById(id);
+          if (!el) return;
+
+          ScrollTrigger.create({
+            trigger: el,
+            start: 'top center',
+            end: 'bottom center',
+            onEnter: () => setStop(key),
+            onEnterBack: () => setStop(key),
+          });
+        });
+      });
+
+      return () => {
+        ctx.revert();
+      };
     }
 
     const ctx = gsap.context(() => {
