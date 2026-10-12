@@ -12,12 +12,15 @@ async function testKeyboardNav() {
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
   });
 
+  const rawBaseUrl = process.argv[2] ?? 'http://localhost:4173/portfolio/';
+  const baseUrl = rawBaseUrl.endsWith('/') ? rawBaseUrl : `${rawBaseUrl}/`;
+
   try {
     const page = await browser.newPage();
     await page.setViewport({ width: 1280, height: 800 });
 
-    console.log('Testing keyboard navigation on http://localhost:4173/ ...');
-    await page.goto('http://localhost:4173/', { waitUntil: 'networkidle2' });
+    console.log(`Testing keyboard navigation on ${baseUrl} ...`);
+    await page.goto(baseUrl, { waitUntil: 'networkidle2' });
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
     // Press Tab repeatedly and record focused elements
@@ -52,7 +55,7 @@ async function testKeyboardNav() {
 
     // Test mobile drawer Escape key closing
     await page.setViewport({ width: 390, height: 844, isMobile: true, hasTouch: true });
-    await page.goto('http://localhost:4173/', { waitUntil: 'networkidle2' });
+    await page.goto(baseUrl, { waitUntil: 'networkidle2' });
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
     const menuBtn = await page.$('button[aria-controls="mobile-navigation"]');

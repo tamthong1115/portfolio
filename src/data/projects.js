@@ -1,6 +1,7 @@
 import ecommerceImg from '../assets/projects/ecommerce-platform.webp';
 import hotelImg from '../assets/projects/hotel-booking-platform.webp';
 import clinicImg from '../assets/projects/clinic-management-system.webp';
+import warehouseImg from '../assets/projects/warehouse-management-system.webp';
 
 export const projects = [
   {
@@ -75,6 +76,6 @@ export const projects = [
       live: "",
       repo: "",
     },
-    image: null,
+    image: warehouseImg,
   },
 ];

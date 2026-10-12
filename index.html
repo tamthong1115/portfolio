@@ -11,8 +11,9 @@
     <meta name="theme-color" content="#0b0f19" />
 
     <!-- Favicon & Touch Icons -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/svg+xml" href="%BASE_URL%favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="%BASE_URL%apple-touch-icon.png" />
+    <link rel="canonical" href="https://tamthong1115.github.io/portfolio/" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -22,7 +23,7 @@
       property="og:description"
       content="Portfolio of Truong Tam Thong, a Fullstack Engineer building scalable web apps with React, Next.js, and Java microservices."
     />
-    <meta property="og:image" content="/og.png" />
+    <meta property="og:image" content="https://tamthong1115.github.io/portfolio/og.png" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -31,7 +32,22 @@
       name="twitter:description"
       content="Portfolio of Truong Tam Thong, a Fullstack Engineer building scalable web apps with React, Next.js, and Java microservices."
     />
-    <meta name="twitter:image" content="/og.png" />
+    <meta name="twitter:image" content="https://tamthong1115.github.io/portfolio/og.png" />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Truong Tam Thong",
+        "jobTitle": "Fullstack Engineer",
+        "url": "https://tamthong1115.github.io/portfolio/",
+        "sameAs": [
+          "https://github.com/tamthong1115",
+          "https://linkedin.com/in/tamthong1115"
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

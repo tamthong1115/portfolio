@@ -15,6 +15,9 @@ export function Footer() {
           <p className="text-xs text-muted font-body">
             &copy; {currentYear} {profile.name}. All rights reserved.
           </p>
+          <p className="text-xs text-muted font-body">
+            3D Model: Retro Computer Workspace (CC-BY 4.0).
+          </p>
         </div>
 
         {/* Section Links */}

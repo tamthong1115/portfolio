@@ -13,6 +13,9 @@ async function runAxeAudit() {
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
   });
 
+  const rawBaseUrl = process.argv[2] ?? 'http://localhost:4173/portfolio/';
+  const baseUrl = rawBaseUrl.endsWith('/') ? rawBaseUrl : `${rawBaseUrl}/`;
+
   try {
     const page = await browser.newPage();
     const axeScriptPath = path.resolve('node_modules/axe-core/axe.min.js');
@@ -20,8 +23,8 @@ async function runAxeAudit() {
 
     // 1. Test Desktop (1280x800)
     await page.setViewport({ width: 1280, height: 800 });
-    console.log('Testing Desktop Viewport (1280x800)...');
-    await page.goto('http://localhost:4173/', { waitUntil: 'networkidle2' });
+    console.log(`Testing Desktop Viewport (1280x800) on ${baseUrl} ...`);
+    await page.goto(baseUrl, { waitUntil: 'networkidle2' });
     await new Promise((resolve) => setTimeout(resolve, 2000));
     await page.evaluate(axeSource);
 
@@ -39,7 +42,7 @@ async function runAxeAudit() {
     // 2. Test Mobile Viewport (390x844 - iPhone 12/13/14)
     await page.setViewport({ width: 390, height: 844, isMobile: true, hasTouch: true });
     console.log('Testing Mobile Viewport (390x844)...');
-    await page.goto('http://localhost:4173/?tier=mid', { waitUntil: 'networkidle2' });
+    await page.goto(`${baseUrl}?tier=mid`, { waitUntil: 'networkidle2' });
     await new Promise((resolve) => setTimeout(resolve, 2000));
     await page.evaluate(axeSource);
 
@@ -74,7 +77,7 @@ async function runAxeAudit() {
 
     // 4. Test Low-Tier Fallback Poster Mode
     console.log('Testing Low-Tier Fallback Poster Mode (?tier=low)...');
-    await page.goto('http://localhost:4173/?tier=low', { waitUntil: 'networkidle2' });
+    await page.goto(`${baseUrl}?tier=low`, { waitUntil: 'networkidle2' });
     await new Promise((resolve) => setTimeout(resolve, 2000));
     await page.evaluate(axeSource);
 

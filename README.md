@@ -2,7 +2,9 @@
 
 A modern, interactive 3D developer portfolio built with React 19, Three.js, and React Three Fiber (R3F).
 
-## Planned Stack
+**Live URL**: [https://tamthong1115.github.io/portfolio/](https://tamthong1115.github.io/portfolio/)
+
+## Tech Stack
 
 - **Framework**: [React 19](https://react.dev/) + [Vite](https://vitejs.dev/)
 - **3D Graphics**: [Three.js](https://threejs.org/) + [React Three Fiber (@react-three/fiber)](https://r3f.docs.pmnd.rs/) + [@react-three/drei](https://github.com/pmndrs/drei)
@@ -59,8 +61,8 @@ node scripts/optimize-images.mjs
 
 This uses `sharp` to resize and compress images into 16:9 1280x720 WebP files.
 
-## Assets Note
-
-- `public/og.png`: Temporary 1200x630 placeholder graphic displaying the site name and title on the dark canvas theme. Remember to replace this with an in-engine capture of the finished 3D scene before production launch.
+## Assets & Attribution
+ 
+- `public/og.png`: In-engine 1200x630 capture of the 3D developer desk scene for social media previews.
 - `src/assets/models/desk.glb`: Retro developer workstation 3D model (1.47 MB), optimized with Draco geometry compression and WebP textures via glTF-Transform. Licensed under CC-BY 4.0.
 
