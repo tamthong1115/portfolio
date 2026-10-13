@@ -77,29 +77,46 @@ export function Header() {
             {profile.name}
           </a>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:block" aria-label="Primary navigation">
-            <ul className="flex items-center gap-1 lg:gap-2">
-              {sections.map((section) => {
-                const isActive = activeSection === section.id;
-                return (
-                  <li key={section.id}>
-                    <a
-                      href={`#${section.id}`}
-                      className={`relative px-3.5 py-1.5 rounded-md font-body text-sm transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
-                        isActive
-                          ? 'text-accent font-semibold bg-surface/70'
-                          : 'text-muted hover:text-text hover:bg-surface/30'
-                      }`}
-                      aria-current={isActive ? 'page' : undefined}
-                    >
-                      {section.label}
-                    </a>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
+          {/* Desktop Navigation & Resume */}
+          <div className="hidden md:flex items-center gap-3">
+            <nav aria-label="Primary navigation">
+              <ul className="flex items-center gap-1 lg:gap-2">
+                {sections.map((section) => {
+                  const isActive = activeSection === section.id;
+                  return (
+                    <li key={section.id}>
+                      <a
+                        href={`#${section.id}`}
+                        className={`relative px-3.5 py-1.5 rounded-md font-body text-sm transition-all duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent ${
+                          isActive
+                            ? 'text-accent font-semibold bg-surface/70'
+                            : 'text-muted hover:text-text hover:bg-surface/30'
+                        }`}
+                        aria-current={isActive ? 'page' : undefined}
+                      >
+                        {section.label}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+
+            {profile.resume && (
+              <a
+                href={profile.resume}
+                download="Truong_Tam_Thong_CV.pdf"
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md font-body text-xs font-semibold text-accent border border-accent/40 bg-accent/10 hover:bg-accent/20 transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              >
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+                <span>CV</span>
+              </a>
+            )}
+          </div>
 
           {/* Mobile Menu Button */}
           <button
@@ -172,6 +189,24 @@ export function Header() {
               })}
             </ul>
           </nav>
+
+          {profile.resume && (
+            <div className="mt-4 pt-4 border-t border-surface/80 w-full">
+              <a
+                href={profile.resume}
+                download="Truong_Tam_Thong_CV.pdf"
+                target="_blank"
+                rel="noreferrer"
+                onClick={closeMenu}
+                className="flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-base font-semibold bg-accent text-bg shadow-md transition-all active:scale-95"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+                </svg>
+                <span>Download CV (PDF)</span>
+              </a>
+            </div>
+          )}
         </div>
       )}
     </>
