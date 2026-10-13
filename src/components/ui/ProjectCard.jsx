@@ -3,7 +3,7 @@ export function ProjectCard({ project }) {
   const hasRepoLink = Boolean(project.links?.repo && project.links.repo.trim() !== '');
 
   return (
-    <article className="group bg-surface/75 backdrop-blur-md rounded-2xl border border-surface/70 overflow-hidden flex flex-col justify-between transition-all duration-200 ease-out hover:-translate-y-1 hover:border-accent/50 hover:shadow-xl hover:shadow-black/20 motion-reduce:hover:transform-none">
+    <article className="group bg-surface/75 backdrop-blur-md rounded-2xl border border-surface/70 overflow-hidden flex flex-col justify-between transition-all duration-200 ease-out hover:-translate-y-1 hover:border-accent/50 hover:shadow-xl hover:shadow-black/20 motion-reduce:hover:transform-none pointer-events-auto">
       <div>
         {/* Project Image or Neutral Placeholder */}
         <div className="relative aspect-video w-full overflow-hidden bg-bg/60 border-b border-surface/50">

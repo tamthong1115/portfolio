@@ -11,7 +11,7 @@ export function Contact() {
       className="min-h-[100svh] min-h-[100dvh] flex items-center justify-center py-20 sm:py-24"
     >
       <Container>
-        <div className="max-w-3xl p-6 sm:p-10 md:p-12 rounded-3xl bg-surface/75 backdrop-blur-md border border-surface/70 shadow-2xl">
+        <div className="max-w-3xl p-6 sm:p-10 md:p-12 rounded-3xl bg-surface/75 backdrop-blur-md border border-surface/70 shadow-2xl pointer-events-auto">
           <h2 className="text-2xl sm:text-4xl font-display font-bold text-text mb-4 sm:mb-6">
             {section?.label}
           </h2>

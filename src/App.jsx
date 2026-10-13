@@ -1,7 +1,9 @@
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { LenisProvider } from './context/LenisContext';
+import { WorkspaceProvider } from './context/WorkspaceContext';
 import Scene from './components/canvas/Scene';
 import Loader from './components/ui/Loader';
+import WorkspaceHUD from './components/ui/WorkspaceHUD';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Hero from './sections/Hero';
@@ -17,17 +19,20 @@ export function App() {
 
   return (
     <LenisProvider>
-      <Loader onLoaded={handleLoaderComplete} />
-      <Scene />
+      <WorkspaceProvider>
+        <Loader onLoaded={handleLoaderComplete} />
+        <Scene />
 
-      <Header />
-      <main id="main-content" className="relative z-10 flex flex-col">
-        <Hero />
-        <About />
-        <Projects />
-        <Contact />
-      </main>
-      <Footer />
+        <Header />
+        <main id="main-content" className="relative z-10 flex flex-col pointer-events-none">
+          <Hero />
+          <About />
+          <Projects />
+          <Contact />
+        </main>
+        <Footer />
+        <WorkspaceHUD />
+      </WorkspaceProvider>
     </LenisProvider>
   );
 }

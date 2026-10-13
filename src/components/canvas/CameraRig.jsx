@@ -26,6 +26,9 @@ export function CameraRig() {
     targetZ: CAMERA_STOPS.hero.target[2],
   });
 
+  // Damped mouse parallax state
+  const mouseParallax = useRef({ x: 0, y: 0, rotX: 0, rotY: 0 });
+
   // Setup GSAP ScrollTrigger timeline
   useEffect(() => {
     // When prefersReducedMotion is enabled: instant camera stops per section, no continuous scrub/easing
@@ -213,17 +216,34 @@ export function CameraRig() {
       );
     }
 
-    // Apply subtle additive idle float to idleRig child
+    // Apply subtle additive idle float and damped mouse parallax to idleRig child
     if (idleRigRef.current) {
       if (prefersReducedMotion) {
         idleRigRef.current.position.set(0, 0, 0);
         idleRigRef.current.rotation.set(0, 0, 0);
       } else {
         const t = state.clock.getElapsedTime();
-        idleRigRef.current.position.y = Math.sin(t * 0.7) * 0.02;
-        idleRigRef.current.position.x = Math.cos(t * 0.5) * 0.01;
-        idleRigRef.current.rotation.z = Math.sin(t * 0.6) * 0.004;
-        idleRigRef.current.rotation.x = Math.cos(t * 0.4) * 0.003;
+        const idleY = Math.sin(t * 0.7) * 0.02;
+        const idleX = Math.cos(t * 0.5) * 0.01;
+        const idleRotZ = Math.sin(t * 0.6) * 0.004;
+        const idleRotX = Math.cos(t * 0.4) * 0.003;
+
+        // Smooth damped mouse parallax (damped towards pointer target)
+        const targetPx = state.pointer.x * 0.06;
+        const targetPy = state.pointer.y * 0.04;
+        const targetRotY = -state.pointer.x * 0.03;
+        const targetRotX = state.pointer.y * 0.02;
+
+        mouseParallax.current.x += (targetPx - mouseParallax.current.x) * 0.05;
+        mouseParallax.current.y += (targetPy - mouseParallax.current.y) * 0.05;
+        mouseParallax.current.rotX += (targetRotX - mouseParallax.current.rotX) * 0.05;
+        mouseParallax.current.rotY += (targetRotY - mouseParallax.current.rotY) * 0.05;
+
+        idleRigRef.current.position.x = idleX + mouseParallax.current.x;
+        idleRigRef.current.position.y = idleY + mouseParallax.current.y;
+        idleRigRef.current.rotation.x = idleRotX + mouseParallax.current.rotX;
+        idleRigRef.current.rotation.y = mouseParallax.current.rotY;
+        idleRigRef.current.rotation.z = idleRotZ;
       }
     }
   });

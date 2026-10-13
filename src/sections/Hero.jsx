@@ -8,7 +8,7 @@ export function Hero() {
       className="min-h-[100svh] min-h-[100dvh] flex items-center justify-center py-20 sm:py-24"
     >
       <Container>
-        <div className="max-w-3xl p-6 sm:p-10 md:p-12 rounded-3xl bg-surface/75 backdrop-blur-md border border-surface/70 shadow-2xl">
+        <div className="max-w-3xl p-6 sm:p-10 md:p-12 rounded-3xl bg-surface/75 backdrop-blur-md border border-surface/70 shadow-2xl pointer-events-auto">
           <h1 className="text-[clamp(2.25rem,6vw+1rem,4.5rem)] font-display font-bold text-text tracking-tight leading-[1.1] mb-4">
             {profile.name}
           </h1>

@@ -84,9 +84,9 @@ export function Scene() {
         right: 0,
         bottom: 0,
         zIndex: 0,
-        pointerEvents: showDevControls ? 'auto' : 'none',
+        pointerEvents: 'auto',
       }}
-      className="fixed inset-0 z-0 pointer-events-none"
+      className="fixed inset-0 z-0 pointer-events-auto"
       aria-hidden="true"
     >
       <Suspense fallback={null}>

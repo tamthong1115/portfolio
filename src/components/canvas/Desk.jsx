@@ -3,6 +3,7 @@ import { useFrame } from '@react-three/fiber';
 
 import { useGLTF, Center } from '@react-three/drei';
 import * as THREE from 'three';
+import { useWorkspace } from '../../hooks/useWorkspace';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import deskModelUrl from '../../assets/models/desk.glb?url';
 
@@ -12,6 +13,7 @@ export function Desk() {
   const groupRef = useRef(null);
   const screenMeshRef = useRef(null);
   const prefersReducedMotion = useReducedMotion();
+  const { currentTheme, cycleScreenTheme } = useWorkspace();
 
   // Load Draco-compressed model using local decoder
   const { scene } = useGLTF(deskModelUrl, DRACO_DECODER_PATH);
@@ -45,7 +47,7 @@ export function Desk() {
       // High-tech terminal monitor emissive surface
       screenMesh.material = new THREE.MeshStandardMaterial({
         color: 0x050d1a,
-        emissive: new THREE.Color('#58c5ff'),
+        emissive: new THREE.Color(currentTheme.emissive),
         emissiveIntensity: 1.15,
         roughness: 0.6,
         metalness: 0.0,
@@ -53,7 +55,14 @@ export function Desk() {
       screenMesh.castShadow = false;
       screenMesh.receiveShadow = false;
     }
-  }, [scene]);
+  }, [scene, currentTheme.emissive]);
+
+  // Update emissive color when CRT theme changes
+  useEffect(() => {
+    if (screenMeshRef.current && screenMeshRef.current.material) {
+      screenMeshRef.current.material.emissive.set(currentTheme.emissive);
+    }
+  }, [currentTheme]);
 
   // Monitor screen pulse & flicker animation
   useFrame((state) => {
@@ -78,7 +87,26 @@ export function Desk() {
     <group ref={groupRef} position={[0, 0, 0]} rotation={[0.15, -1.4, 0]}>
       {/* Center helper normalizes model bounding box so desk sits comfortably at origin */}
       <Center position={[0, -0.4, 0]}>
-        <primitive object={scene} scale={0.11} />
+        <primitive
+          object={scene}
+          scale={0.11}
+          onClick={(e) => {
+            if (e.object?.name === 'monitor-screen') {
+              e.stopPropagation();
+              cycleScreenTheme();
+            }
+          }}
+          onPointerOver={(e) => {
+            if (e.object?.name === 'monitor-screen') {
+              document.body.style.cursor = 'pointer';
+            }
+          }}
+          onPointerOut={(e) => {
+            if (e.object?.name === 'monitor-screen') {
+              document.body.style.cursor = 'auto';
+            }
+          }}
+        />
       </Center>
     </group>
   );

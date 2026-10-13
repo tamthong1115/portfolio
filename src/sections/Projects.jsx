@@ -12,7 +12,7 @@ export function Projects() {
       className="min-h-[100svh] min-h-[100dvh] flex flex-col justify-center py-20 sm:py-24"
     >
       <Container>
-        <div className="mb-8 sm:mb-12">
+        <div className="mb-8 sm:mb-12 pointer-events-auto">
           <h2 className="text-2xl sm:text-4xl font-display font-bold text-text tracking-tight">
             {section?.label}
           </h2>
