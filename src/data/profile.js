@@ -8,6 +8,6 @@ export const profile = {
     github: "https://github.com/tamthong1115",
     linkedin: "https://linkedin.com/in/tamthong1115",
   },
-  resume: `${import.meta.env.BASE_URL}Truong_Tam_Thong_CV.pdf`,
+  resume: `${import.meta.env.BASE_URL}Truong_Tam_Thong_Resume.pdf`,
   photo: null,
 };

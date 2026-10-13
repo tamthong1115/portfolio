@@ -14,6 +14,7 @@ async function testEndpoints() {
     `${BASE}/robots.txt`,
     `${BASE}/draco/draco_decoder.wasm`,
     `${BASE}/draco/draco_wasm_wrapper.js`,
+    `${BASE}/Truong_Tam_Thong_Resume.pdf`,
   ];
 
   const results = [];

@@ -37,7 +37,7 @@ export function About() {
               {profile.resume && (
                 <a
                   href={profile.resume}
-                  download="Truong_Tam_Thong_CV.pdf"
+                  download="Truong_Tam_Thong_Resume.pdf"
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-body font-semibold text-sm border border-accent/40 text-text bg-accent/10 hover:bg-accent/20 transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"

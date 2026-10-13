@@ -69,7 +69,7 @@ export function Footer() {
           {profile.resume && (
             <a
               href={profile.resume}
-              download="Truong_Tam_Thong_CV.pdf"
+              download="Truong_Tam_Thong_Resume.pdf"
               target="_blank"
               rel="noreferrer"
               className="text-xs sm:text-sm font-body text-muted hover:text-accent transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent rounded"
