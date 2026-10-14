@@ -13,7 +13,7 @@ export function Desk() {
   const groupRef = useRef(null);
   const screenMeshRef = useRef(null);
   const prefersReducedMotion = useReducedMotion();
-  const { currentTheme, cycleScreenTheme } = useWorkspace();
+  const { currentTheme, openTerminal } = useWorkspace();
 
   // Load Draco-compressed model using local decoder
   const { scene } = useGLTF(deskModelUrl, DRACO_DECODER_PATH);
@@ -93,7 +93,7 @@ export function Desk() {
           onClick={(e) => {
             if (e.object?.name === 'monitor-screen') {
               e.stopPropagation();
-              cycleScreenTheme();
+              openTerminal();
             }
           }}
           onPointerOver={(e) => {

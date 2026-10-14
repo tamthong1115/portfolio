@@ -4,6 +4,7 @@ import { WorkspaceProvider } from './context/WorkspaceContext';
 import Scene from './components/canvas/Scene';
 import Loader from './components/ui/Loader';
 import WorkspaceHUD from './components/ui/WorkspaceHUD';
+import RetroTerminalModal from './components/terminal/RetroTerminalModal';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Hero from './sections/Hero';
@@ -32,6 +33,7 @@ export function App() {
         </main>
         <Footer />
         <WorkspaceHUD />
+        <RetroTerminalModal />
       </WorkspaceProvider>
     </LenisProvider>
   );

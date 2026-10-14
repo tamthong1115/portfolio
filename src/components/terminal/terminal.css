@@ -1,0 +1,81 @@
+/* Retro CRT scanlines and phosphor glow styling */
+
+.crt-screen {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle CRT scanline scan raster */
+.crt-screen::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0) 50%,
+    rgba(0, 0, 0, 0.28) 50%,
+    rgba(0, 0, 0, 0.28)
+  );
+  background-size: 100% 4px;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0.75;
+}
+
+/* Faint radial vignette mimicking curved CRT monitor glass */
+.crt-screen::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: radial-gradient(circle at center, transparent 65%, rgba(0, 0, 0, 0.6) 100%);
+  pointer-events: none;
+  z-index: 11;
+}
+
+/* Phosphor text glow */
+.crt-glow {
+  text-shadow: 0 0 5px currentColor, 0 0 10px currentColor;
+}
+
+.crt-subtle-glow {
+  text-shadow: 0 0 3px currentColor;
+}
+
+/* Retro blinking cursor */
+@keyframes crt-cursor-blink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+
+.crt-cursor {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.15em;
+  vertical-align: -0.15em;
+  background-color: currentColor;
+  animation: crt-cursor-blink 1s steps(1) infinite;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .crt-screen::before {
+    display: none;
+  }
+  .crt-cursor {
+    animation: none;
+    opacity: 1;
+  }
+}

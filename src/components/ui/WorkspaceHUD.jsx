@@ -9,6 +9,7 @@ export function WorkspaceHUD() {
     soundEnabled,
     toggleSound,
     toastMessage,
+    openTerminal,
   } = useWorkspace();
 
   return (
@@ -66,6 +67,18 @@ export function WorkspaceHUD() {
           />
           <span className="hidden sm:inline">CRT:</span>
           <span className="font-semibold text-accent">{currentTheme.label.split(' ')[0]}</span>
+        </button>
+
+        {/* Launch Interactive Retro Terminal CLI */}
+        <button
+          type="button"
+          onClick={openTerminal}
+          title="Open Retro Terminal CLI (` or click)"
+          aria-label="Open Retro Terminal CLI"
+          className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-mono font-medium transition-all duration-200 focus-visible:outline-2 focus-visible:outline-accent cursor-pointer border border-emerald-500/40 bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 shadow-[0_0_10px_rgba(16,185,129,0.15)]"
+        >
+          <span className="font-bold text-sm leading-none">&gt;_</span>
+          <span className="hidden sm:inline">CLI</span>
         </button>
 
         {/* Toggle Audio Click/Chirp Effects */}

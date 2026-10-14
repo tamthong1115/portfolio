@@ -7,7 +7,7 @@ import Desk from './Desk';
 import CameraRig from './CameraRig';
 
 export function ThreeCanvas({ isHighTier, onDegrade, showDevControls }) {
-  const { lampOn, toggleLamp, currentTheme, cycleScreenTheme } = useWorkspace();
+  const { lampOn, toggleLamp, currentTheme, openTerminal } = useWorkspace();
   const prefersReducedMotion = useReducedMotion();
 
   return (
@@ -24,7 +24,7 @@ export function ThreeCanvas({ isHighTier, onDegrade, showDevControls }) {
     >
       {/* Live performance monitor: downgrade tier if sustained FPS drops below 28-30 */}
       <PerformanceMonitor
-        bounds={[28, 52]}
+        bounds={() => [28, 52]}
         onDecline={() => {
           if (onDegrade) onDegrade('decline');
         }}
@@ -102,7 +102,7 @@ export function ThreeCanvas({ isHighTier, onDegrade, showDevControls }) {
         position={[-0.05, 0.35, -0.05]}
         onClick={(e) => {
           e.stopPropagation();
-          cycleScreenTheme();
+          openTerminal();
         }}
         onPointerOver={() => {
           document.body.style.cursor = 'pointer';
