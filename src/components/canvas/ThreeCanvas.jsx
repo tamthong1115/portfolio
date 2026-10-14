@@ -8,7 +8,7 @@ import Desk from './Desk';
 import CameraRig from './CameraRig';
 
 export function ThreeCanvas({ isHighTier, onDegrade, showDevControls }) {
-  const { lampOn, toggleLamp, currentTheme, openTerminal } = useWorkspace();
+  const { lampOn, currentTheme, interactWithObject, setHoveredObject } = useWorkspace();
   const prefersReducedMotion = useReducedMotion();
 
   return (
@@ -87,34 +87,28 @@ export function ThreeCanvas({ isHighTier, onDegrade, showDevControls }) {
         position={[-1.2, 0.9, 0.4]}
         onClick={(e) => {
           e.stopPropagation();
-          toggleLamp();
+          interactWithObject({
+            id: 'lamp',
+            label: 'Desk Lamp',
+            action: lampOn ? 'Turn Off' : 'Turn On',
+            icon: '💡',
+          });
         }}
         onPointerOver={() => {
           document.body.style.cursor = 'pointer';
+          setHoveredObject({
+            id: 'lamp',
+            label: 'Desk Lamp',
+            action: lampOn ? 'Turn Off' : 'Turn On',
+            icon: '💡',
+          });
         }}
         onPointerOut={() => {
           document.body.style.cursor = 'auto';
+          setHoveredObject(null);
         }}
       >
         <sphereGeometry args={[0.38, 16, 16]} />
-        <meshBasicMaterial transparent opacity={0} depthWrite={false} />
-      </mesh>
-
-      {/* Interactive 3D Hit Proxy: CRT Monitor Screen */}
-      <mesh
-        position={[-0.05, 0.35, -0.05]}
-        onClick={(e) => {
-          e.stopPropagation();
-          openTerminal();
-        }}
-        onPointerOver={() => {
-          document.body.style.cursor = 'pointer';
-        }}
-        onPointerOut={() => {
-          document.body.style.cursor = 'auto';
-        }}
-      >
-        <boxGeometry args={[0.6, 0.5, 0.35]} />
         <meshBasicMaterial transparent opacity={0} depthWrite={false} />
       </mesh>
 

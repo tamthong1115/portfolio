@@ -10,6 +10,7 @@ export function WorkspaceHUD() {
     toggleSound,
     toastMessage,
     openTerminal,
+    hoveredObject,
   } = useWorkspace();
 
   return (
@@ -27,6 +28,26 @@ export function WorkspaceHUD() {
           <div className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-surface/90 backdrop-blur-md border border-accent/40 shadow-xl shadow-black/40 text-xs sm:text-sm font-mono text-text">
             <span className="w-2 h-2 rounded-full bg-accent animate-ping motion-reduce:animate-none" />
             <span>{toastMessage}</span>
+          </div>
+        )}
+      </div>
+
+      {/* 3D Raycasting Target Discovery Indicator */}
+      <div
+        role="status"
+        aria-live="polite"
+        className={`fixed bottom-24 left-1/2 -translate-x-1/2 z-40 pointer-events-none select-none transition-all duration-200 ease-out transform ${
+          hoveredObject
+            ? 'opacity-100 translate-y-0 scale-100'
+            : 'opacity-0 translate-y-2 scale-95 pointer-events-none'
+        }`}
+      >
+        {hoveredObject && (
+          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-surface/90 backdrop-blur-xl border border-accent/40 shadow-2xl shadow-black/60 text-xs sm:text-sm font-mono text-text">
+            <span className="text-base">{hoveredObject.icon}</span>
+            <span className="font-semibold text-accent">{hoveredObject.label}</span>
+            <span className="text-muted/60">•</span>
+            <span className="text-muted">Click to {hoveredObject.action}</span>
           </div>
         )}
       </div>
