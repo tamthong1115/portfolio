@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Environment, OrbitControls, PerformanceMonitor, Sparkles } from '@react-three/drei';
+import * as THREE from 'three';
 import { useWorkspace } from '../../hooks/useWorkspace';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import Desk from './Desk';
@@ -20,6 +21,8 @@ export function ThreeCanvas({ isHighTier, onDegrade, showDevControls }) {
         antialias: isHighTier,
         powerPreference: isHighTier ? 'high-performance' : 'default',
         stencil: false,
+        toneMapping: THREE.ACESFilmicToneMapping,
+        toneMappingExposure: 1.08,
       }}
     >
       {/* Live performance monitor: downgrade tier if sustained FPS drops below 28-30 */}

@@ -5,6 +5,7 @@ import { useGLTF, Center } from '@react-three/drei';
 import * as THREE from 'three';
 import { useWorkspace } from '../../hooks/useWorkspace';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
+import { createScreenCanvasTexture } from './screenTexture';
 import deskModelUrl from '../../assets/models/desk.glb?url';
 
 const DRACO_DECODER_PATH = `${import.meta.env.BASE_URL}draco/`;
@@ -12,6 +13,7 @@ const DRACO_DECODER_PATH = `${import.meta.env.BASE_URL}draco/`;
 export function Desk() {
   const groupRef = useRef(null);
   const screenMeshRef = useRef(null);
+  const screenTextureManagerRef = useRef(null);
   const prefersReducedMotion = useReducedMotion();
   const { currentTheme, openTerminal } = useWorkspace();
 
@@ -44,28 +46,51 @@ export function Desk() {
 
     if (screenMesh) {
       screenMeshRef.current = screenMesh;
-      // High-tech terminal monitor emissive surface
+
+      // Create live dynamic CRT terminal canvas texture
+      const texManager = createScreenCanvasTexture(
+        currentTheme.emissive,
+        currentTheme.label
+      );
+      screenTextureManagerRef.current = texManager;
+
+      // High-tech terminal monitor with live canvas texture
       screenMesh.material = new THREE.MeshStandardMaterial({
         color: 0x050d1a,
-        emissive: new THREE.Color(currentTheme.emissive),
+        map: texManager.texture,
+        emissive: new THREE.Color(0xffffff),
+        emissiveMap: texManager.texture,
         emissiveIntensity: 1.15,
-        roughness: 0.6,
-        metalness: 0.0,
+        roughness: 0.5,
+        metalness: 0.05,
       });
       screenMesh.castShadow = false;
       screenMesh.receiveShadow = false;
     }
-  }, [scene, currentTheme.emissive]);
 
-  // Update emissive color when CRT theme changes
+    return () => {
+      screenTextureManagerRef.current?.dispose();
+    };
+  }, [scene, currentTheme.emissive, currentTheme.label]);
+
+  // Update canvas texture theme when CRT theme changes
   useEffect(() => {
-    if (screenMeshRef.current && screenMeshRef.current.material) {
-      screenMeshRef.current.material.emissive.set(currentTheme.emissive);
+    if (screenTextureManagerRef.current) {
+      screenTextureManagerRef.current.updateTheme(
+        currentTheme.emissive,
+        currentTheme.label
+      );
     }
   }, [currentTheme]);
 
-  // Monitor screen pulse & flicker animation
+  // Monitor screen pulse & dynamic canvas rendering
   useFrame((state) => {
+    const t = state.clock.getElapsedTime();
+
+    if (screenTextureManagerRef.current) {
+      screenTextureManagerRef.current.render(t, prefersReducedMotion);
+    }
+
     if (prefersReducedMotion) {
       if (screenMeshRef.current && screenMeshRef.current.material) {
         screenMeshRef.current.material.emissiveIntensity = 1.15;
@@ -73,12 +98,10 @@ export function Desk() {
       return;
     }
 
-    const t = state.clock.getElapsedTime();
-
     if (screenMeshRef.current && screenMeshRef.current.material) {
       // Faint monitor pulse & flicker: primary slow pulse with micro-fluctuation
-      const slowPulse = Math.sin(t * 2.0) * 0.1;
-      const microFlicker = Math.sin(t * 17.0) > 0.95 ? 0.06 : 0;
+      const slowPulse = Math.sin(t * 2.0) * 0.08;
+      const microFlicker = Math.sin(t * 17.0) > 0.96 ? 0.05 : 0;
       screenMeshRef.current.material.emissiveIntensity = 1.15 + slowPulse + microFlicker;
     }
   });

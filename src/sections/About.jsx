@@ -11,7 +11,7 @@ export function About() {
       className="min-h-[100svh] min-h-[100dvh] flex items-center justify-center py-20 sm:py-24"
     >
       <Container>
-        <div className="max-w-4xl p-6 sm:p-10 md:p-12 rounded-3xl bg-surface/75 backdrop-blur-md border border-surface/70 shadow-2xl pointer-events-auto">
+        <div className="max-w-4xl p-6 sm:p-10 md:p-12 rounded-3xl bg-surface/75 backdrop-blur-xl border border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.08),0_25px_50px_-12px_rgba(0,0,0,0.5)] pointer-events-auto transition-all duration-300">
           <h2 className="text-2xl sm:text-4xl font-display font-bold text-text mb-6">
             {section?.label}
           </h2>
@@ -31,9 +31,30 @@ export function About() {
             )}
 
             <div className="max-w-[65ch]">
-              <p className="text-base sm:text-lg font-body text-muted leading-relaxed mb-6">
+              <p className="text-base sm:text-lg font-body text-muted leading-relaxed mb-4">
                 {profile.bio}
               </p>
+
+              {/* Engineering Highlights Strip */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 my-6 pt-5 border-t border-surface/80">
+                <div className="p-3 rounded-xl bg-bg/60 border border-surface/80">
+                  <div className="text-[11px] font-mono text-muted mb-0.5">Role</div>
+                  <div className="text-xs sm:text-sm font-display font-bold text-text">Fullstack Eng</div>
+                </div>
+                <div className="p-3 rounded-xl bg-bg/60 border border-surface/80">
+                  <div className="text-[11px] font-mono text-muted mb-0.5">Core Ecosystem</div>
+                  <div className="text-xs sm:text-sm font-display font-bold text-accent">React + Java</div>
+                </div>
+                <div className="p-3 rounded-xl bg-bg/60 border border-surface/80">
+                  <div className="text-[11px] font-mono text-muted mb-0.5">Backend</div>
+                  <div className="text-xs sm:text-sm font-display font-bold text-text">Microservices</div>
+                </div>
+                <div className="p-3 rounded-xl bg-bg/60 border border-surface/80">
+                  <div className="text-[11px] font-mono text-muted mb-0.5">Quality</div>
+                  <div className="text-xs sm:text-sm font-display font-bold text-emerald-400">CI/CD &amp; Tests</div>
+                </div>
+              </div>
+
               {profile.resume && (
                 <a
                   href={profile.resume}

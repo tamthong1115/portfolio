@@ -3,19 +3,22 @@ export function ProjectCard({ project }) {
   const hasRepoLink = Boolean(project.links?.repo && project.links.repo.trim() !== '');
 
   return (
-    <article className="group bg-surface/75 backdrop-blur-md rounded-2xl border border-surface/70 overflow-hidden flex flex-col justify-between transition-all duration-200 ease-out hover:-translate-y-1 hover:border-accent/50 hover:shadow-xl hover:shadow-black/20 motion-reduce:hover:transform-none pointer-events-auto">
+    <article className="group bg-surface/75 backdrop-blur-xl rounded-3xl border border-white/10 overflow-hidden flex flex-col justify-between transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-accent/40 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.6),0_0_20px_rgba(129,140,248,0.12)] motion-reduce:hover:transform-none pointer-events-auto shadow-[inset_0_1px_1px_rgba(255,255,255,0.06),0_10px_25px_-5px_rgba(0,0,0,0.3)]">
       <div>
         {/* Project Image or Neutral Placeholder */}
         <div className="relative aspect-video w-full overflow-hidden bg-bg/60 border-b border-surface/50">
           {project.image ? (
-            <img
-              src={project.image}
-              alt={`${project.title} screenshot`}
-              width={640}
-              height={360}
-              loading="lazy"
-              className="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-105 motion-reduce:group-hover:transform-none"
-            />
+            <>
+              <img
+                src={project.image}
+                alt={`${project.title} screenshot`}
+                width={640}
+                height={360}
+                loading="lazy"
+                className="w-full h-full object-cover transition-transform duration-300 ease-out group-hover:scale-105 motion-reduce:group-hover:transform-none"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-surface/80 via-transparent to-transparent pointer-events-none opacity-50 group-hover:opacity-20 transition-opacity duration-300" />
+            </>
           ) : (
             <div
               className="w-full h-full flex flex-col items-center justify-center bg-surface/40 p-6 text-center select-none"
@@ -51,7 +54,7 @@ export function ProjectCard({ project }) {
               {project.title}
             </h3>
             {project.role && (
-              <span className="text-xs font-body font-medium text-accent bg-accent/10 border border-accent/20 px-2.5 py-0.5 rounded-full shrink-0">
+              <span className="text-[11px] font-mono font-medium text-accent bg-accent/10 border border-accent/30 px-2.5 py-0.5 rounded-full shrink-0">
                 {project.role}
               </span>
             )}
@@ -67,7 +70,7 @@ export function ProjectCard({ project }) {
               {project.stack.map((tech) => (
                 <li
                   key={tech}
-                  className="text-xs font-body text-muted bg-bg/70 border border-surface/80 px-2.5 py-1 rounded-md"
+                  className="text-xs font-mono text-muted bg-bg/80 border border-surface/90 px-2.5 py-1 rounded-md"
                 >
                   {tech}
                 </li>

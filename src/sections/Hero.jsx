@@ -8,14 +8,26 @@ export function Hero() {
       className="min-h-[100svh] min-h-[100dvh] flex items-center justify-center py-20 sm:py-24"
     >
       <Container>
-        <div className="max-w-3xl p-6 sm:p-10 md:p-12 rounded-3xl bg-surface/75 backdrop-blur-md border border-surface/70 shadow-2xl pointer-events-auto">
-          <h1 className="text-[clamp(2.25rem,6vw+1rem,4.5rem)] font-display font-bold text-text tracking-tight leading-[1.1] mb-4">
+        <div className="max-w-3xl p-6 sm:p-10 md:p-12 rounded-3xl bg-surface/75 backdrop-blur-xl border border-white/10 shadow-[inset_0_1px_1px_rgba(255,255,255,0.08),0_25px_50px_-12px_rgba(0,0,0,0.5)] pointer-events-auto transition-all duration-300">
+          {/* Status Badge */}
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono font-medium mb-5 shadow-[0_0_12px_rgba(16,185,129,0.15)]">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse motion-reduce:animate-none" />
+            <span>Available for full-time &amp; contract roles</span>
+          </div>
+
+          <h1 className="text-[clamp(2.5rem,6vw+1rem,4.75rem)] font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-text via-text to-accent/90 tracking-tight leading-[1.08] mb-3">
             {profile.name}
           </h1>
 
-          <p className="text-lg sm:text-2xl font-display font-semibold text-accent mb-4">
-            {profile.title}
-          </p>
+          <div className="flex flex-wrap items-center gap-2.5 mb-5">
+            <p className="text-lg sm:text-2xl font-display font-semibold text-accent">
+              {profile.title}
+            </p>
+            <span className="text-muted/40 font-mono hidden sm:inline">•</span>
+            <span className="text-xs sm:text-sm font-mono text-muted bg-bg/60 border border-surface/80 px-2.5 py-1 rounded-lg">
+              React • Next.js • Java
+            </span>
+          </div>
 
           <p className="text-base sm:text-lg font-body text-muted leading-relaxed mb-8 max-w-2xl">
             {profile.tagline}
